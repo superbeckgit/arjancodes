@@ -110,33 +110,36 @@ class Matrix:
         spiral = []
         dircount = 0
         loopcount = 0
+        directions = ['right', 'down', 'left', 'up']
         while h_max >= h_min and v_max >= v_min:
             # even access is horizontal, odd is vertical
-            if dircount % 4 == 0:  # RIGHT
-                # row down from the top
-                rownum = loopcount
-                spiral.extend(self.get_horizontal(row=rownum, h_min=h_min, h_max=h_max))
-                v_min += 1
-            elif dircount % 4 == 1:  # DOWN
-                # column in from right
-                colnum = self.length - loopcount - 1
-                spiral.extend(self.get_vertical(col=colnum, v_min=v_min, v_max=v_max))
-                h_max -= 1
-            elif dircount % 4 == 2:  # LEFT
-                # row up from the bottom, reversed
-                rownum = self.height - loopcount - 1
-                spiral.extend(
-                    reversed(self.get_horizontal(row=rownum, h_min=h_min, h_max=h_max))
-                )
-                v_max -= 1
-            elif dircount % 4 == 3:  # UP
-                # colunm in from left, reversed
-                colnum = loopcount
-                spiral.extend(
-                    reversed(self.get_vertical(col=colnum, v_min=v_min, v_max=v_max))
-                )
-                h_min += 1
-                loopcount += 1
+            match directions[dircount%4]:
+                case 'right':
+                    # row down from the top
+                    rownum = loopcount
+                    spiral.extend(self.get_horizontal(row=rownum, h_min=h_min, h_max=h_max))
+                    v_min += 1
+                case 'down':
+                    # column in from right
+                    colnum = self.length - loopcount - 1
+                    spiral.extend(self.get_vertical(col=colnum, v_min=v_min, v_max=v_max))
+                    h_max -= 1
+                case 'left':
+                    # row up from the bottom, reversed
+                    rownum = self.height - loopcount - 1
+                    spiral.extend(
+                        reversed(self.get_horizontal(row=rownum, h_min=h_min, h_max=h_max))
+                    )
+                    v_max -= 1
+                case 'up':
+                    # colunm in from left, reversed
+                    colnum = loopcount
+                    spiral.extend(
+                        reversed(self.get_vertical(col=colnum, v_min=v_min, v_max=v_max))
+                    )
+                    h_min += 1
+                    loopcount += 1
+
             dircount += 1
         return spiral
 
