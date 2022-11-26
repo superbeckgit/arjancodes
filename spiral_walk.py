@@ -1,11 +1,11 @@
 """
 Given an NxM input array A, generate the elements of A starting at A[0][0], and then spiralling in in a clockwise manner. The array need not be square.
 
-There at least three possible constraints on the solution you might try to satisfy, but  none of them are mandatory. From first to last, each makes the problem slightly harder.
+There at least three possible constraints on the solution you might try to satisfy, but none of them are mandatory. From first to last, each makes the problem slightly harder.
 
-you may modify the contents of A
-you may not modify the contents of A, but your code may allocate an auxilliary array of the same size
-you may not modify the contents of A, and you must only use a fixed amount of extra storage.
+You may modify the contents of A
+You may not modify the contents of A, but your code may allocate an auxilliary array of the same size
+You may not modify the contents of A, and you must only use a fixed amount of extra storage.
 
 The last constraint, in particular, means that your code to walk the spiral can't an auxilliary array of the same size as A, or any other dynamically sized structure.
 
@@ -176,7 +176,7 @@ def test_get_vertical() -> None:
     assert mat.get_vertical(col=0, v_min=1, v_max=2) == [3, 6]
 
 
-test_data = [
+test_data: list[tuple[list[list[Any]], list[Any]]] = [
     ([[1]], [1]),
     ([[1, 2]], [1, 2]),
     ([[1], [2]], [1, 2]),
