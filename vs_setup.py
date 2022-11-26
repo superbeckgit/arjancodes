@@ -1,6 +1,3 @@
-""" module docstring? really?"""
-
-
 def times_three(inp: int) -> int:
     """simple function for vs setup"""
     return inp * 3

@@ -1,0 +1,3 @@
+[MASTER]
+docstring-min-length=10
+disable=missing-class-docstring,missing-module-docstring
