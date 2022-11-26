@@ -69,35 +69,36 @@ class Matrix:
 
     @classmethod
     def from_length_and_height(cls, length: int, height: int):
+        """Create matrix with increasing values based on size"""
         values = []
         count = 0
-        for row in range(height):
+        for _ in range(height):
             this_row = []
-            for col in range(length):
+            for _ in range(length):
                 this_row.append(count)
                 count += 1
             values.append(this_row)
         return Matrix(values=values)
 
     def get_horizontal(
-        self, row: int, min: Optional[int] = None, max: Optional[int] = None
+        self, row: int, h_min: Optional[int] = None, h_max: Optional[int] = None
     ) -> list[Any]:
         """Return a horizontal slice of the matrix given a row and min/max index (inclusive)"""
-        if min is None:
-            min = 0
-        if max is None:
-            max = self.length
-        return self.values[row][min : max + 1]
+        if h_min is None:
+            h_min = 0
+        if h_max is None:
+            h_max = self.length
+        return self.values[row][h_min : h_max + 1]
 
     def get_vertical(
-        self, col: int, min: Optional[int] = None, max: Optional[int] = None
+        self, col: int, v_min: Optional[int] = None, v_max: Optional[int] = None
     ) -> list[Any]:
         """Return a vertical slice of the matrix given a column and min/max index (inclusive)"""
-        if min is None:
-            min = 0
-        if max is None:
-            max = self.height
-        return [row[col] for ix, row in enumerate(self.values) if min <= ix <= max]
+        if v_min is None:
+            v_min = 0
+        if v_max is None:
+            v_max = self.height
+        return [row[col] for ix, row in enumerate(self.values) if v_min <= ix <= v_max]
 
     def spiral_walk(self):
         """Return a flat list of values from walking the matrix right, down, left, and up."""
@@ -114,25 +115,25 @@ class Matrix:
             if dircount % 4 == 0:  # RIGHT
                 # row down from the top
                 rownum = loopcount
-                spiral.extend(self.get_horizontal(row=rownum, min=h_min, max=h_max))
+                spiral.extend(self.get_horizontal(row=rownum, h_min=h_min, h_max=h_max))
                 v_min += 1
             elif dircount % 4 == 1:  # DOWN
                 # column in from right
                 colnum = self.length - loopcount - 1
-                spiral.extend(self.get_vertical(col=colnum, min=v_min, max=v_max))
+                spiral.extend(self.get_vertical(col=colnum, v_min=v_min, v_max=v_max))
                 h_max -= 1
             elif dircount % 4 == 2:  # LEFT
                 # row up from the bottom, reversed
                 rownum = self.height - loopcount - 1
                 spiral.extend(
-                    reversed(self.get_horizontal(row=rownum, min=h_min, max=h_max))
+                    reversed(self.get_horizontal(row=rownum, h_min=h_min, h_max=h_max))
                 )
                 v_max -= 1
             elif dircount % 4 == 3:  # UP
                 # colunm in from left, reversed
                 colnum = loopcount
                 spiral.extend(
-                    reversed(self.get_vertical(col=colnum, min=v_min, max=v_max))
+                    reversed(self.get_vertical(col=colnum, v_min=v_min, v_max=v_max))
                 )
                 h_min += 1
                 loopcount += 1
@@ -165,14 +166,14 @@ def test_matrix_from_length_and_width():
 def test_get_horizontal():
     mat = Matrix.from_length_and_height(length=3, height=4)
     assert mat.get_horizontal(row=0) == [0, 1, 2]
-    assert mat.get_horizontal(row=0, min=1) == [1, 2]
-    assert mat.get_horizontal(row=3, min=1, max=1) == [10]
+    assert mat.get_horizontal(row=0, h_min=1) == [1, 2]
+    assert mat.get_horizontal(row=3, h_min=1, h_max=1) == [10]
 
 
 def test_get_vertical() -> None:
     mat = Matrix.from_length_and_height(length=3, height=4)
     assert mat.get_vertical(0) == [0, 3, 6, 9]
-    assert mat.get_vertical(col=0, min=1, max=2) == [3, 6]
+    assert mat.get_vertical(col=0, v_min=1, v_max=2) == [3, 6]
 
 
 test_data = [
