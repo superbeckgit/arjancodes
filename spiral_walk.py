@@ -110,35 +110,32 @@ class Matrix:
         dircount = 0
         loopcount = 0
         while h_max >= h_min and v_max >= v_min:
-            if dircount % 2 == 0:
-                # even access is horizontal
-                if dircount % 4 == 0:  # RIGHT
-                    # row down from the top
-                    rownum = loopcount
-                    spiral.extend(self.get_horizontal(row=rownum, min=h_min, max=h_max))
-                    v_min += 1
-                else:  # count%4 == 2 # LEFT
-                    # row up from the bottom, reversed
-                    rownum = self.height - loopcount - 1
-                    spiral.extend(
-                        reversed(self.get_horizontal(row=rownum, min=h_min, max=h_max))
-                    )
-                    v_max -= 1
-            else:
-                # odd access is vertical
-                if dircount % 4 == 1:  # DOWN
-                    # column in from right
-                    colnum = self.length - loopcount - 1
-                    spiral.extend(self.get_vertical(col=colnum, min=v_min, max=v_max))
-                    h_max -= 1
-                else:  # count%4 == 3 # UP
-                    # colunm in from left, reversed
-                    colnum = loopcount
-                    spiral.extend(
-                        reversed(self.get_vertical(col=colnum, min=v_min, max=v_max))
-                    )
-                    h_min += 1
-                    loopcount += 1
+            # even access is horizontal, odd is vertical
+            if dircount % 4 == 0:  # RIGHT
+                # row down from the top
+                rownum = loopcount
+                spiral.extend(self.get_horizontal(row=rownum, min=h_min, max=h_max))
+                v_min += 1
+            elif dircount % 4 == 1:  # DOWN
+                # column in from right
+                colnum = self.length - loopcount - 1
+                spiral.extend(self.get_vertical(col=colnum, min=v_min, max=v_max))
+                h_max -= 1
+            elif dircount % 4 == 2:  # LEFT
+                # row up from the bottom, reversed
+                rownum = self.height - loopcount - 1
+                spiral.extend(
+                    reversed(self.get_horizontal(row=rownum, min=h_min, max=h_max))
+                )
+                v_max -= 1
+            elif dircount % 4 == 3:  # UP
+                # colunm in from left, reversed
+                colnum = loopcount
+                spiral.extend(
+                    reversed(self.get_vertical(col=colnum, min=v_min, max=v_max))
+                )
+                h_min += 1
+                loopcount += 1
             dircount += 1
         return spiral
 
