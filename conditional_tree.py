@@ -26,9 +26,10 @@ class Trail:
 def create_nodes() -> list[Node]:
     one: Node = Node("one", {})
     two: Node = Node("two", {"one": State.FAIL})
-    three: Node = Node("three", {"one": State.PASS, "two": State.FAIL})
+    # three: Node = Node("three", {"one": State.PASS, "two": State.FAIL})
     four: Node = Node("four", {"one": State.FAIL, "two": State.PASS})
-    nodes: list[Node] = [one, two, three, four]
+    # nodes: list[Node] = [one, two, three, four]
+    nodes: list[Node] = [one, two, four]
     return nodes
 
 
