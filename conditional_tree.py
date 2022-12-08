@@ -26,10 +26,10 @@ class Trail:
 def create_nodes() -> list[Node]:
     one: Node = Node("one", {})
     two: Node = Node("two", {"one": State.FAIL})
-    # three: Node = Node("three", {"one": State.PASS, "two": State.FAIL})
+    three: Node = Node("three", {"one": State.PASS, "two": State.FAIL})
     four: Node = Node("four", {"one": State.FAIL, "two": State.PASS})
-    # nodes: list[Node] = [one, two, three, four]
-    nodes: list[Node] = [one, two, four]
+    nodes: list[Node] = [one, two, three, four]
+    # nodes: list[Node] = [one, two, four]
     return nodes
 
 
@@ -59,11 +59,13 @@ def backward_inspect(nodes: list[Node]) -> None:
             for constraint in parent_constraints:
                 for node_name in constraint.keys():
                     parent_names.append(node_name)
-                    if node_name in path_constraints:
-                        if constraint[node_name] != path_constraints[node_name]:
-                            raise ValueError(
-                                f"Node '{node.name}' cannot be reached because it depends on multiple states of '{node_name}': {constraint} + {path_constraints}"
-                            )
+                    if (
+                        node_name in path_constraints
+                        and constraint[node_name] != path_constraints[node_name]
+                    ):
+                        raise ValueError(
+                            f"Node '{node.name}' cannot be reached because it depends on multiple states of node '{node_name}'\n\tCannot satisfy {constraint} and {path_constraints}"
+                        )
 
 
 def forward_paths(nodes: list[Node]):
